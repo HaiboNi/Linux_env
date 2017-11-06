@@ -1,0 +1,6 @@
+when creating legends in matpotlib 2.10, the legend of lines with no labels is also included. 
+
+To go around this, simply add:
+
+  label = ''
+to remove all these labels.This technique can be usefull in plot data regarding AP/Cai alternans. 
