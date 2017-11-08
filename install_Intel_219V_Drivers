@@ -1,0 +1,77 @@
+intel i219-v drivers
+
+https://forums.linuxmint.com/viewtopic.php?t=209410
+https://www.intel.com/content/www/us/en/support/articles/000005480/network-and-i-o/ethernet-products.html
+https://downloadcenter.intel.com/download/15817/Intel-Network-Adapter-Driver-for-PCIe-Intel-Gigabit-Ethernet-Network-Connections-Under-Linux-?product=71307
+
+
+
+ Last Reviewed: 13-Oct-2017
+Article ID: 000005480
+
+Using the Linux* e1000e base driver for Intel® Gigabit Ethernet Network Connections
+
+The Linux* e1000e driver supports PCI Express* Gigabit Network Connections except the 82575, 82576, 82580, and I350.
+For information concerning driver configuration details, refer to the Read Me file in the Download Center.
+
+The Linux* base drivers support the 2.4.x and 2.6.x kernels. They include support for Itanium® 2-based systems.
+
+The drivers are only supported as a loadable module. We don't supply patches against the kernel source to allow for static linking of the drivers. For questions related to hardware requirements, see the documentation supplied with your Intel® Gigabit Network Adapter. All hardware requirements listed apply for use with Linux.
+
+Features now available in supported kernels:
+
+    Native VLANs
+    Channel Bonding (teaming)
+    SNMP
+
+Find Channel Bonding documentation in the Linux kernel source: /documentation/networking/bonding.txt
+
+This release doesn't support the driver information previously displayed in the /proc file system. You can also use ethtool (version 1.6 or later), lspci, and ifconfig to get the same information. Find instructions on updating ethtool in the additional configurations section.
+Note		The Intel® 82562v 10/100 Network Connection only provides 10/100 support.	
+
+
+Building and installation
+
+To build a binary RPM* package of this driver, run rpmbuild -tb e1000e.tar.gz.
+Notes		
+
+    For the build to work properly, the currently running kernel must match the version and configuration of the installed kernel sources. If you have just recompiled the kernel, reboot the system.
+
+    RPM functionality was only tested in Red Hat distributions.
+
+    Download current e1000e package from Download Center or SourceForge. Move the base driver tar file to the directory of your choice. For example, use /home/<USERNAME>/e1000e or /usr/local/src/e1000e.
+
+    Untar/unzip the archive, where <x.x.x> is the version number for the driver tar file:
+    tar zxf e1000e-<x.x.x>.tar.gz
+
+    Change to the driver src directory, where <x.x.x> is the version number for the driver tar:
+    cd e1000e-<x.x.x>/src/
+
+    Compile the driver module:
+    # make install	
+
+    The binary installs as:
+    /lib/modules/<KERNEL VERSION>/kernel/drivers/net/e1000e/e1000e.[k]o	
+
+    The install location listed above is the default. Location may differ for various Linux distributions.
+
+    Load the module using either the insmod or modprobe command:
+    modprobe e1000e insmod e1000e	
+
+    Note that you can use the insmod command for 2.6 kernels if you specify the full path to the driver module. For example:
+    insmod /lib/modules/<KERNEL VERSION>/kernel/drivers/net/e1000e/e1000e.ko	
+
+    With 2.6 based kernels, make sure that older e1000e drivers are removed from the kernel before you load the new module:
+    rmmod e1000e; modprobe e1000e
+
+    Assign an IP address to the interface by entering the following, where <x> is the interface number:
+    ifconfig eth<x> <IP_address>
+
+    Verify that the interface works. Enter the following, where <IP_address> is the IP address for another machine on the same subnet as the interface you are testing:
+    ping <IP_address>
+
+
+
+
+
+
